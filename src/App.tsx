@@ -42,7 +42,6 @@ function App() {
 
 //UI:
     function getTaskForTODoList () {
-        debugger
         let taskFoToDoList = tasks
         switch (filter) {
             case "active":
