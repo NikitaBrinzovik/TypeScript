@@ -29,7 +29,9 @@ function App() {
         // хей UI обновись
         setTasks(filterTasks)
     }
-
+    function changeTaskStatus (taskID: string, newIsDoneValue: boolean) {
+        setTasks(tasks.map(t => t.id === taskID ? {...t, isDone: newIsDoneValue} : t))
+    }
     function addTask(title:string) {
         const newTask: TaskType = {
             id:v1(),
@@ -63,6 +65,8 @@ function App() {
                 addTask={addTask}
                 removeTask={removeTasks}
                 changeFilter={changeFilter}
+                filter={filter}
+                changeTaskStatus={changeTaskStatus}
             />
             {/*<ToDoList title={"What to buy"} tasks={tasksToBuy}/>*/}
             {/*<ToDoList title={"What to do"} tasks={tasksToDo}/>*/}
