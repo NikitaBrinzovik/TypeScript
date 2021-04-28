@@ -7,69 +7,130 @@ export type TaskType = {
     title: string
     isDone: boolean
     id: string
+
 }
-export type FilterValuesType = "all" | "active" | "completed"
+export type FilterValuesType = string
+export type TodoListType = {
+    id: string
+    title: string
+    filter: FilterValuesType
+}
+//стейт для тасек
+type TaskStateType = {
+    [key: string]: Array<TaskType>
+}
+
 
 function App() {
 //BLL-работают с данными
-    const [tasks, setTasks] = useState <Array<TaskType>>( [
-        {id: v1(), isDone: true, title: "HTML"},
-        {id: v1(), isDone: true, title: "CSS"},
-        {id: v1(), isDone: true, title: "React"},
-        {id: v1(), isDone: false, title: "TS"},
-    ])
-    const [filter, setFilter] = useState <string>("all") //"all" | "active" | "completed"
 
-    function changeFilter(value: string) { //FilterValueType
-        setFilter(value)
-    }
-    function  removeTasks(taskID:string) {
-        const filterTasks = tasks.filter(t => t.id !== taskID)
-        console.log(filterTasks)
+    //вынесем и создадим id  в отдельные переменные
+    const todoListID_1 = v1()
+    const todoListID_2 = v1()
+    //создаем лок стейт с тудулистами
+    const [todoList, setTodoList] = useState<Array<TodoListType>>([
+        {id: todoListID_1, title: "what to learn", filter: "all"},
+        {id: todoListID_2, title: "what to buy", filter: "all"},
+    ])
+    const [tasks, setTasks] = useState<TaskStateType>({
+        [todoListID_1]: [
+            {id: v1(), isDone: true, title: "HTML"},
+            {id: v1(), isDone: true, title: "CSS"},
+            {id: v1(), isDone: true, title: "React"},
+            {id: v1(), isDone: false, title: "TS"},
+        ],
+        [todoListID_2]: [
+            {id: v1(), isDone: true, title: "milk"},
+            {id: v1(), isDone: true, title: "meat"},
+            {id: v1(), isDone: true, title: "bread"},
+            {id: v1(), isDone: false, title: "weed"},
+        ],
+    })
+
+    // const [tasks, setTasks] = useState <Array<TaskType>>( [
+    //     {id: v1(), isDone: true, title: "HTML"},
+    //     {id: v1(), isDone: true, title: "CSS"},
+    //     {id: v1(), isDone: true, title: "React"},
+    //     {id: v1(), isDone: false, title: "TS"},
+    // ])
+    //const [filter, setFilter] = useState <string>("all") //"all" | "active" | "completed"
+
+
+    function removeTasks(taskID: string, todoListID: string) {
+        tasks[todoListID].filter(t => t.id !== taskID)
+        setTasks({...tasks, })
+        //setTodoList(todoList.filter(tl=>tl.id !== todoListID))
+        //delete  tasks[todoListID]
+        //const filterTasks = tasks.filter(t => t.id !== taskID)
         // хей UI обновись
-        setTasks(filterTasks)
+        //setTasks(filterTasks)
     }
-    function changeTaskStatus (taskID: string, newIsDoneValue: boolean) {
-        setTasks(tasks.map(t => t.id === taskID ? {...t, isDone: newIsDoneValue} : t))
-    }
-    function addTask(title:string) {
+
+    function addTask(title: string, todoListID: string) {
         const newTask: TaskType = {
-            id:v1(),
+            id: v1(),
             //title: title, ниже запись короче
             title,
             isDone: false
         }
-        setTasks([newTask, ...tasks])
+        //setTasks([newTask, ...tasks])
+        setTasks({...tasks, [todoListID]: [newTask, ...tasks[todoListID]]})
     }
 
+    function changeTaskStatus(taskID: string, newIsDoneValue: boolean, todoListID: string) {
+        //tasks[todoListID] = tasks[todoListID].map(t => t.id === taskID ? {...t, isDone: newIsDoneValue} : t)
+        setTasks({
+            ...tasks,
+            [todoListID]: tasks[todoListID].map(t => t.id === taskID ? {...t, isDone: newIsDoneValue} : t)
+        })
+        //setTasks(tasks.map(t => t.id === taskID ? {...t, isDone: newIsDoneValue} : t))
+    }
+
+    function changeFilter(value: FilterValuesType, todoListID: string) { //FilterValueType
+        setTodoList(todoList.map(tl => tl.id === todoListID ? {...tl, filter: value} : tl))
+    }
+
+    function  removeTodoLIst (todoListID:string) {
+        setTodoList(todoList.filter(tl=>tl.id !== todoListID))
+        delete  tasks[todoListID]
+
+    }
 //UI:
-    function getTaskForTODoList () {
-        let taskFoToDoList = tasks
-        switch (filter) {
+    function getTaskForTODoList(TodoList: TodoListType) {
+        //let taskFoToDoList = tasks
+        switch (TodoList.filter) {
             case "active":
-                taskFoToDoList = tasks.filter(t => !t.isDone)
+                //taskFoToDoList =
+                return tasks[TodoList.id].filter(t => !t.isDone)
                 break;
             case "completed":
-                taskFoToDoList = tasks.filter(t => t.isDone)
+                return tasks[TodoList.id].filter(t => t.isDone)
                 break;
         }
-        return taskFoToDoList
+        return tasks[TodoList.id]
     }
 
+    const todoListComponents = todoList.map(tl => {
+            return (
+                <ToDoList
+                    key={tl.id}
+                    todoListID={tl.id}
+                    title={tl.title}
+                    tasks={getTaskForTODoList(tl)}
+                    addTask={addTask}
+                    removeTask={removeTasks}
+                    changeFilter={changeFilter}
+                    filter={tl.filter}
+                    changeTaskStatus={changeTaskStatus}
+                    removeTodoList={removeTodoLIst}
+                />
+            )
+        }
+    )
     return (
         //JSX:
         <div className="App">
-            <ToDoList
-                title={"What to learn"}
-                tasks={getTaskForTODoList()}
-                addTask={addTask}
-                removeTask={removeTasks}
-                changeFilter={changeFilter}
-                filter={filter}
-                changeTaskStatus={changeTaskStatus}
-            />
-            {/*<ToDoList title={"What to buy"} tasks={tasksToBuy}/>*/}
-            {/*<ToDoList title={"What to do"} tasks={tasksToDo}/>*/}
+            {todoListComponents}
         </div>
     );
 }
