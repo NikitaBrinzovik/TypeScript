@@ -2,6 +2,7 @@ import React, {useState} from 'react';
 import './App.css';
 import ToDoList from "./ToDoList";
 import {v1} from "uuid";
+import AddItemForm from "./AddItemForm";
 
 export type TaskType = {
     title: string
@@ -78,6 +79,13 @@ function App() {
         setTasks({...tasks, [todoListID]: [newTask, ...tasks[todoListID]]})
     }
 
+    function addTodoList(title: string) {
+        const newTodoListID = v1()
+        const newTodoList: TodoListType = {id: newTodoListID, title, filter: "all"}
+        setTodoList([...todoList, newTodoList])
+        setTasks({...tasks, [newTodoListID]: []})
+    }
+
     function changeTaskStatus(taskID: string, newIsDoneValue: boolean, todoListID: string) {
         //tasks[todoListID] = tasks[todoListID].map(t => t.id === taskID ? {...t, isDone: newIsDoneValue} : t)
         setTasks({
@@ -87,8 +95,18 @@ function App() {
         //setTasks(tasks.map(t => t.id === taskID ? {...t, isDone: newIsDoneValue} : t))
     }
 
+    function changeTaskTitle(taskID: string, newTitle: string, todoListID: string) {
+        setTasks({
+            ...tasks,
+            [todoListID]: tasks[todoListID].map(t => t.id === taskID ? {...t, title: newTitle} : t)
+        })
+    }
+
     function changeFilter(value: FilterValuesType, todoListID: string) { //FilterValueType
         setTodoList(todoList.map(tl => tl.id === todoListID ? {...tl, filter: value} : tl))
+    }
+    function changeTodoListTitle(title: string, todoListID: string) {
+        setTodoList(todoList.map(tl => tl.id === todoListID ? {...tl, title: title} : tl))
     }
 
     function  removeTodoLIst (todoListID:string) {
@@ -124,6 +142,8 @@ function App() {
                     filter={tl.filter}
                     changeTaskStatus={changeTaskStatus}
                     removeTodoList={removeTodoLIst}
+                    changeTaskTitle={changeTaskTitle}
+                    changeTodoListTitle={changeTodoListTitle}
                 />
             )
         }
@@ -131,6 +151,7 @@ function App() {
     return (
         //JSX:
         <div className="App">
+            <AddItemForm addItem={addTodoList} />
             {todoListComponents}
         </div>
     );
