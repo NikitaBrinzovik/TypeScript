@@ -1,22 +1,22 @@
-.App {
-  padding: 30px;
-  display: flex;
-}
+/*.App {*/
+/*  padding: 30px;*/
+/*  display: flex;*/
+/*}*/
 
-.App > div {
-  margin-right: 50px;
-}
+/*.App > div {*/
+/*  margin-right: 50px;*/
+/*}*/
 
-.is-done {
-  opacity: 0.5;
-  /*font: cornflowerblue;*/
-}
+/*.is-done {*/
+/*  opacity: 0.5;*/
+/*  !*font: cornflowerblue;*!*/
+/*}*/
 
-.active-filter {
-  background: gold;
-}
+/*.active-filter {*/
+/*  background: gold;*/
+/*}*/
 
-.error {
-  border: 2px solid firebrick;
-  outline: none;
-}
+/*.error {*/
+/*  outline: none;*/
+/*}*/
+

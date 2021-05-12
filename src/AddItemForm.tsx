@@ -1,10 +1,13 @@
 import React, {useState, KeyboardEvent, ChangeEvent, MouseEvent} from "react";
+import {Button, IconButton, TextField} from "@material-ui/core";
+import {AddCircleOutlineTwoTone} from "@material-ui/icons";
 
 type AddItemFormPropsType = {
     addItem: (title: string) => void
 }
+
 //создаём универсальную компоненту для добавления...
-function AddItemForm(props:AddItemFormPropsType) {
+function AddItemForm(props: AddItemFormPropsType) {
     const [title, setTitle] = useState<string>("")
     const [error, setError] = useState<boolean>(false)
 
@@ -24,7 +27,7 @@ function AddItemForm(props:AddItemFormPropsType) {
     }
 
     const errorMessage = error
-        ? <div style={{color: "red", border: "1px solid firebrick", borderRadius: "5px"}}>Найн!</div>
+        ? <div style={{color: "red", borderRadius: "5px"}}>Найн! Писать задача, шнейля!</div>
         : null
 
 
@@ -33,17 +36,22 @@ function AddItemForm(props:AddItemFormPropsType) {
             onClickAddItem()
         }
     }
-    return(
+    return (
         <div>
-            <input className={error ? "error" : ""}
-                   value={title}
-                //value={error ? "xxx" : title}
-                   onChange={onChangeTitle}
-                   onKeyPress={onKeyPressAddItem}
+            <TextField
+                        // className={error ? "error" : ""}
+                       value={title}
+                       variant={"outlined"}
+                       label={'Hey, write here task) Faster!'}
+                       onChange={onChangeTitle}
+                       onKeyPress={onKeyPressAddItem}
+                       error={!!error}
+                       helperText={errorMessage}
 
             />
-            <button onClick={onClickAddItem}>+</button>
-            {errorMessage}
+            <IconButton onClick={onClickAddItem}  color={"primary"}>
+                <AddCircleOutlineTwoTone />
+            </IconButton>
         </div>
     )
 }
