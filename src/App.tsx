@@ -128,10 +128,10 @@ function App() {
 
     const toDoListComponents = toDoList.map(tl => {
             return (
-                <Grid item>
+                <Grid item key={tl.id}>
                     <Paper elevation={5} style={{padding: "20px"}}>
                         <ToDoList
-                            key={tl.id}
+
                             toDoListID={tl.id}
                             title={tl.title}
                             tasks={getTaskForToDoList(tl)}
@@ -143,6 +143,7 @@ function App() {
                             removeToDoList={removeToDoLIst}
                             changeTaskTitle={changeTaskTitle}
                             changeToDoListTitle={changeToDoListTitle}
+
                         />
                     </Paper>
                 </Grid>
