@@ -37,9 +37,9 @@ function ToDoList(props: ToDoListPropsType) {
         }
         return (
             <div className={taskClasses} key={t.id}>
-                <Checkbox color={"secondary"} onChange={changeTaskStatus} checked={t.isDone} style={ {opacity: "0.8"}}/>
+                <Checkbox color={"secondary"} onChange={changeTaskStatus} checked={t.isDone} style={{opacity: "0.8"}}/>
                 <EditableSpan title={t.title} changeTitle={changeTaskTitle}/>
-                <IconButton onClick={removeTask} aria-label="delete" style={ {opacity: "0.5"}}>
+                <IconButton onClick={removeTask} aria-label="delete" style={{opacity: "0.5"}}>
                     <Delete/>
                 </IconButton>
             </div>
@@ -63,7 +63,7 @@ function ToDoList(props: ToDoListPropsType) {
                 </IconButton>
             </h3>
             <AddItemForm addItem={addTask}/>
-            <ul style={ {listStyle: "none", paddingLeft: "0"}}>
+            <ul style={{listStyle: "none", paddingLeft: "0"}}>
                 {tasksJSXElement}
             </ul>
             <div>
