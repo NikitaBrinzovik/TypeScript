@@ -7,6 +7,8 @@ import {
 import {TasksStateType} from '../App';
 import {AddToDoListActionCreator} from "./ToDoList-reducers";
 
+
+beforeEach(() => {})
 test('correct task should be deleted from correct array', () => {
     const startState: TasksStateType = {
         "toDoListID1": [
