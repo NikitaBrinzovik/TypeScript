@@ -8,7 +8,8 @@ import {TasksStateType} from '../App';
 import {AddToDoListActionCreator} from "./ToDoList-reducers";
 
 
-beforeEach(() => {})
+beforeEach(() => {
+})
 test('correct task should be deleted from correct array', () => {
     const startState: TasksStateType = {
         "toDoListID1": [
@@ -102,7 +103,7 @@ test('Изменение title для таски', () => {
         ]
     };
 
-    const action = changeTaskTitleActionCreator("2", true, "toDoListID2", "beef");
+    const action = changeTaskTitleActionCreator("2", "beef", "toDoListID2");
 
     const endState = tasksReducer(startState, action)
 

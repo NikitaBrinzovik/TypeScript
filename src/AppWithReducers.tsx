@@ -5,8 +5,19 @@ import {v1} from "uuid";
 import AddItemForm from "./AddItemForm";
 import {AppBar, IconButton, Typography, Toolbar, Button, Container, Grid, Paper} from "@material-ui/core";
 import {Menu} from '@material-ui/icons';
-import {toDoListReducer} from "./STORE/ToDoList-reducers";
-import {addTaskActionCreator, removeTaskActionCreator, tasksReducer} from "./STORE/tasks-reducer";
+import {
+    AddToDoListActionCreator,
+    ChangeFilterToDoListActionCreator,
+    ChangeTitleActionCreator,
+    RemoveToDoListActionCreator,
+    toDoListReducer
+} from "./STORE/ToDoList-reducers";
+import {
+    addTaskActionCreator,
+    changeTaskStatusActionCreator, changeTaskTitleActionCreator,
+    removeTaskActionCreator,
+    tasksReducer
+} from "./STORE/tasks-reducer";
 
 
 export type TaskType = {
@@ -34,11 +45,11 @@ function AppWithReducers() {
     const toDoListID_1 = v1()
     const toDoListID_2 = v1()
     //создаем лок стейт с тудулистами
-    const [toDoList, dispatchToToDoListReducer] = useReducer( toDoListReducer,[
+    const [toDoList, dispatchToToDoListReducer] = useReducer(toDoListReducer, [
         {id: toDoListID_1, title: "what to learn", filter: "all"},
         {id: toDoListID_2, title: "what to buy", filter: "all"},
     ])
-    const [tasks, dispatchToTasksReducer] = useReducer( tasksReducer, {
+    const [tasks, dispatchToTasksReducer] = useReducer(tasksReducer, {
         [toDoListID_1]: [
             {id: v1(), isDone: true, title: "HTML"},
             {id: v1(), isDone: true, title: "CSS"},
@@ -59,54 +70,43 @@ function AppWithReducers() {
     }
 
     function addTask(title: string, toDoListID: string) {
-        const action =addTaskActionCreator(title , toDoListID);
-        dispatchToToDoListReducer(action);
-        const newTask: TaskType = {
-            id: v1(),
-            //title: title, ниже запись короче
-            title,
-            isDone: false
-        }
-        //setTasks([newTask, ...tasks])
-        setTasks({...tasks, [toDoListID]: [newTask, ...tasks[toDoListID]]})
+        const action = addTaskActionCreator(title, toDoListID);
+        dispatchToTasksReducer(action);
+
     }
 
     function changeTaskStatus(taskID: string, newIsDoneValue: boolean, toDoListID: string) {
-
-        setTasks({
-            ...tasks,
-            [toDoListID]: tasks[toDoListID].map(t => t.id === taskID ? {...t, isDone: newIsDoneValue} : t)
-        })
-
+        const action = changeTaskStatusActionCreator(taskID, newIsDoneValue, toDoListID)
+        dispatchToTasksReducer(action);
     }
 
     function changeTaskTitle(taskID: string, newTitle: string, toDoListID: string) {
-        setTasks({
-            ...tasks,
-            [toDoListID]: tasks[toDoListID].map(t => t.id === taskID ? {...t, title: newTitle} : t)
-        })
+        //короткая запись:
+        dispatchToTasksReducer(changeTaskTitleActionCreator(taskID, newTitle, toDoListID));
     }
 
     //functions for to do list:
     function changeFilter(value: FilterValuesType, toDoListID: string) { //FilterValueType
-        setToDoList(toDoList.map(tl => tl.id === toDoListID ? {...tl, filter: value} : tl))
+        const action = ChangeFilterToDoListActionCreator(toDoListID, value)
+        dispatchToToDoListReducer(action);
     }
 
     function changeToDoListTitle(title: string, toDoListID: string) {
-        setToDoList(toDoList.map(tl => tl.id === toDoListID ? {...tl, title: title} : tl))
+        const action = ChangeTitleActionCreator(title, toDoListID)
+        dispatchToToDoListReducer(action);
     }
 
     function removeToDoLIst(toDoListID: string) {
-        setToDoList(toDoList.filter(tl => tl.id !== toDoListID))
-        delete tasks[toDoListID]
-
+        const action = RemoveToDoListActionCreator(toDoListID)
+        dispatchToToDoListReducer(action)
+        dispatchToTasksReducer(action)
     }
 
     function addToDoList(title: string) {
-        const newToDoListID = v1()
-        const newToDoList: ToDoListType = {id: newToDoListID, title, filter: "all"}
-        setToDoList([...toDoList, newToDoList])
-        setTasks({...tasks, [newToDoListID]: []})
+        const action = AddToDoListActionCreator(title)
+        dispatchToToDoListReducer(action)
+        dispatchToTasksReducer(action)
+
     }
 
 //UI:

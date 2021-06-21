@@ -22,7 +22,7 @@ export type ChangeTaskStatusType = {
 export type ChangeTaskTitleType = {
     type: "CHANGE-TASK-TITLE"
     taskID: string
-    isDone: boolean
+    isDone?: boolean
     toDoListID: string
     title: string
 }
@@ -102,21 +102,6 @@ export const addTaskActionCreator = (title: string, toDoListID: string): addTask
 export const changeTaskStatusActionCreator = (taskID: string, isDone: boolean, toDoListID: string): ChangeTaskStatusType => {
     return {type: "CHANGE-TASK-STATUS", isDone, taskID, toDoListID}
 }
-export const changeTaskTitleActionCreator = (taskID: string, isDone: boolean, toDoListID: string, title: string): ChangeTaskTitleType => {
-    return {type: "CHANGE-TASK-TITLE", taskID, title, toDoListID, isDone}
+export const changeTaskTitleActionCreator = (taskID: string, title: string, toDoListID: string): ChangeTaskTitleType => {
+    return {type: "CHANGE-TASK-TITLE", taskID, title, toDoListID}
 }
-
-
-// const addTaskActionCreator = (toDoListID: string):AddToDoLIstActionType =>{
-//     return {type: 'ADD-TODOLIST', title: newToDoListTitle}
-// }
-// const removeTaskActionCreator = (toDoListID:string): RemoveToDoListActionType=> {
-//     return {type:"REMOVE-TODOLIST", toDoListID: toDoListID}
-// }
-// const changeTaskTitleActionCreator = (toDoListID:string):ChangeToDoListTitleActionType => {
-//     return {type: "CHANGE-TITLE", toDoListID , title: newTodolistTitle}
-// }
-//
-// const changeFilterTaskActionCreator = (toDoListID:string):ChangeFilterActionType => {
-//     return {type:"CHANGE-FILTER", toDoListID, value:newFilter}
-// }
