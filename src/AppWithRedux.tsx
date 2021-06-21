@@ -18,6 +18,8 @@ import {
     removeTaskActionCreator,
     tasksReducer
 } from "./STATE/tasks-reducer";
+import {useDispatch, useSelector} from "react-redux";
+import {AppRootStateType} from "./STATE/STORE";
 
 
 export type TaskType = {
@@ -38,74 +40,53 @@ export type TasksStateType = {
 }
 
 
-function AppWithReducers() {
-//BLL-работают с данными
+function AppWithRedux() {
 
-    //вынесем и создадим id  в отдельные переменные
-    const toDoListID_1 = v1()
-    const toDoListID_2 = v1()
-    //создаем лок стейт с тудулистами
-    const [toDoList, dispatchToToDoListReducer] = useReducer(toDoListReducer, [
-        {id: toDoListID_1, title: "what to learn", filter: "all"},
-        {id: toDoListID_2, title: "what to buy", filter: "all"},
-    ])
-    const [tasks, dispatchToTasksReducer] = useReducer(tasksReducer, {
-        [toDoListID_1]: [
-            {id: v1(), isDone: true, title: "HTML"},
-            {id: v1(), isDone: true, title: "CSS"},
-            {id: v1(), isDone: true, title: "React"},
-            {id: v1(), isDone: false, title: "TS"},
-        ],
-        [toDoListID_2]: [
-            {id: v1(), isDone: true, title: "milk"},
-            {id: v1(), isDone: true, title: "meat"},
-            {id: v1(), isDone: true, title: "bread"},
-            {id: v1(), isDone: false, title: "weed"},
-        ],
-    })
+    const dispatch = useDispatch()
+    const toDoList = useSelector<AppRootStateType, Array<ToDoListType>>(state => state.toDoLists)
+    const tasks = useSelector<AppRootStateType, TasksStateType>(state => state.tasks)
+
 
     function removeTasks(taskID: string, toDoListID: string) {
         const action = removeTaskActionCreator(taskID, toDoListID);
-        dispatchToTasksReducer(action)
+        dispatch(action)
     }
 
     function addTask(title: string, toDoListID: string) {
         const action = addTaskActionCreator(title, toDoListID);
-        dispatchToTasksReducer(action);
+        dispatch(action);
 
     }
 
     function changeTaskStatus(taskID: string, newIsDoneValue: boolean, toDoListID: string) {
         const action = changeTaskStatusActionCreator(taskID, newIsDoneValue, toDoListID)
-        dispatchToTasksReducer(action);
+        dispatch(action);
     }
 
     function changeTaskTitle(taskID: string, newTitle: string, toDoListID: string) {
         //короткая запись:
-        dispatchToTasksReducer(changeTaskTitleActionCreator(taskID, newTitle, toDoListID));
+        dispatch(changeTaskTitleActionCreator(taskID, newTitle, toDoListID));
     }
 
     //functions for to do list:
     function changeFilter(value: FilterValuesType, toDoListID: string) { //FilterValueType
         const action = ChangeFilterToDoListActionCreator(toDoListID, value)
-        dispatchToToDoListReducer(action);
+        dispatch(action);
     }
 
     function changeToDoListTitle(title: string, toDoListID: string) {
         const action = ChangeTitleActionCreator(title, toDoListID)
-        dispatchToToDoListReducer(action);
+        dispatch(action);
     }
 
     function removeToDoLIst(toDoListID: string) {
         const action = RemoveToDoListActionCreator(toDoListID)
-        dispatchToToDoListReducer(action)
-        dispatchToTasksReducer(action)
+        dispatch(action)
     }
 
     function addToDoList(title: string) {
         const action = AddToDoListActionCreator(title)
-        dispatchToToDoListReducer(action)
-        dispatchToTasksReducer(action)
+        dispatch(action)
 
     }
 
@@ -177,4 +158,4 @@ function AppWithReducers() {
     );
 }
 
-export default AppWithReducers;
+export default AppWithRedux;

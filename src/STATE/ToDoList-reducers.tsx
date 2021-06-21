@@ -30,7 +30,7 @@ export const RemoveToDoListActionCreator = (toDoListID: string): RemoveToDoListA
     return {type: "REMOVE-TODOLIST", toDoListID: toDoListID}
 }
 
-export const AddToDoListActionCreator = (title:string): AddToDoLIstActionType => {
+export const AddToDoListActionCreator = (title: string): AddToDoLIstActionType => {
     return {type: 'ADD-TODOLIST', title, toDoListID: v1()}
 }
 
@@ -40,26 +40,34 @@ export const ChangeTitleActionCreator = (toDoListID: string, title: string): Cha
 }
 
 //export const newFilter: FilterValuesType = "completed";
-export const ChangeFilterToDoListActionCreator = (toDoListID: string, value:FilterValuesType): ChangeFilterActionType => {
+export const ChangeFilterToDoListActionCreator = (toDoListID: string, value: FilterValuesType): ChangeFilterActionType => {
     return {type: "CHANGE-FILTER", toDoListID, value}
 }
 
-export const toDoListReducer = (toDoList: Array<ToDoListType>, action: ActionTypes): Array<ToDoListType> => {
+
+export const toDoListID_1 = v1()
+export const toDoListID_2 = v1()
+const initialState: Array<ToDoListType> = [
+    {id: toDoListID_1, title: "what to learn", filter: "all"},
+    {id: toDoListID_2, title: "what to buy", filter: "all"},
+]
+export const toDoListReducer = (state: Array<ToDoListType> = initialState, action: ActionTypes): Array<ToDoListType> => {
+
 
     switch (action.type) {
         case "REMOVE-TODOLIST":
-            return toDoList.filter(tl => tl.id !== action.toDoListID)
+            return state.filter(tl => tl.id !== action.toDoListID)
         case "ADD-TODOLIST":
             const newToDoListID = action.toDoListID
             const newToDoList: ToDoListType = {id: newToDoListID, title: action.title, filter: "all"}
-            return [newToDoList, ...toDoList]
+            return [newToDoList, ...state]
         case "CHANGE-TITLE":
 
-            return toDoList.map(tl => tl.id === action.toDoListID ? {...tl, title: action.title} : tl)
+            return state.map(tl => tl.id === action.toDoListID ? {...tl, title: action.title} : tl)
         case "CHANGE-FILTER":
-            return (toDoList.map(tl => tl.id === action.toDoListID ? {...tl, filter: action.value} : tl))
+            return state.map(tl => tl.id === action.toDoListID ? {...tl, filter: action.value} : tl)
         default:
-            return toDoList
+            return state;
     }
 }
 
