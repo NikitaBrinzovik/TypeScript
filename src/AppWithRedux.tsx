@@ -24,8 +24,8 @@ export type TaskType = {
     id: string
 
 }
-//export type FilterValuesType = "active" | "completed" | "all"
-export type FilterValuesType = string
+export type FilterValuesType = "active" | "completed" | "all"
+//export type FilterValuesType = string
 export type ToDoListType = {
     id: string
     title: string
@@ -89,25 +89,11 @@ export const AppWithRedux = () => {
 
 //UI:
 
-    const getTaskForToDoList = (ToDoList: ToDoListType) => {
-        //let taskFoToDoList = tasks
-        switch (ToDoList.filter) {
-            case "active":
-                console.log('filter1')
-                //taskFoToDoList =
-                return tasks[ToDoList.id].filter(t => !t.isDone)
-                break;
-            case "completed":
-                console.log('filter2')
-                return tasks[ToDoList.id].filter(t => t.isDone)
-                break;
-        }
-        return tasks[ToDoList.id]
-    }
+
 
     const toDoListComponents = toDoList.map(tl => {
             //У Димы так:
-            //let tasksForTodolist = tasks[tl.id];
+            let tasksForTodolist = tasks[tl.id];
 
             return (
                 <Grid item key={tl.id}>
@@ -116,7 +102,7 @@ export const AppWithRedux = () => {
 
                             toDoListID={tl.id}
                             title={tl.title}
-                            tasks={getTaskForToDoList(tl)}
+                            tasks={tasksForTodolist}
                             addTask={addTask}
                             removeTask={removeTasks}
                             changeFilter={changeFilter}

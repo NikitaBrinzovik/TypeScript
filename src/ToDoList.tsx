@@ -1,4 +1,4 @@
-import React, {MouseEvent, useCallback} from "react";
+import React, {useCallback} from "react";
 import {AddItemForm} from "./AddItemForm";
 import EditableSpan from "./EditableSpan";
 import {Button, IconButton} from "@material-ui/core";
@@ -32,23 +32,41 @@ const ToDoList = React.memo((props: ToDoListPropsType) => {//закеширов�
         props.changeToDoListTitle(title, props.toDoListID)
     }, [props.changeToDoListTitle, props.toDoListID])
 
-    const onClickChangeFilter = (e: MouseEvent<HTMLButtonElement>) =>
-        props.changeFilter(e.currentTarget.name, props.toDoListID)
+
 
     // let tasks1 = getTaskForToDoList()
-  /*  const onAllClickHandler = useCallback(() => props.changeFilter('all', props.toDoListID), [props.toDoListID, props.changeFilter])
+    const onAllClickHandler = useCallback(() => props.changeFilter('all', props.toDoListID), [props.toDoListID, props.changeFilter])
     const onActiveClickHandler = useCallback(() => props.changeFilter('active', props.toDoListID), [props.toDoListID, props.changeFilter])
     const onCompletedClickHandler = useCallback(() => props.changeFilter('completed', props.toDoListID), [props.toDoListID, props.changeFilter])
     let tasksForTodolist = props.tasks
     if (props.filter === 'active') {
-        tasksForTodolist = props.tasks.filter(t => t.isDone === false)
+        tasksForTodolist = props.tasks.filter(t => t.isDone)
     }
     if (props.filter === 'completed') {
-        tasksForTodolist = props.tasks.filter(t => t.isDone === true)
-    }*/
+        tasksForTodolist = props.tasks.filter(t => t.isDone)
+    }
 
+    /*const onClickChangeFilter = (e: MouseEvent<HTMLButtonElement>) =>
+        props.changeFilter(e.currentTarget.name, props.toDoListID)
+    const getTaskForToDoList = (ToDoList: ToDoListType) => {
+        switch (ToDoList.filter) {
 
-    const tasksJSXElement = props.tasks.map(t =>
+            case "active":
+                console.log('filter1')
+                //taskFoToDoList =
+                return props.tasks.filter(t => !t.isDone)
+                break;
+            case "completed":
+                console.log('filter2')
+                return props.tasks.filter(t => t.isDone)
+                break;
+        }
+        return props.tasks
+    }
+    // и в Button надо поменять онКлик и tasksJSXElement
+    */
+    //const tasksJSXElement = props.tasks.map(t =>
+    const tasksJSXElement = tasksForTodolist.map(t =>
         <Task
             toDoListID={props.toDoListID}
             removeTask={props.removeTask}
@@ -88,18 +106,18 @@ const ToDoList = React.memo((props: ToDoListPropsType) => {//закеширов�
             </ul>
             <div>
                 <Button variant={props.filter === "all" ? "contained" : "outlined"}
-                        name="all" onClick={onClickChangeFilter }
-                        //name="all" onClick={onAllClickHandler}
+                        //name="all" onClick={onClickChangeFilter }
+                        name="all" onClick={onAllClickHandler}
                 >All
                 </Button>
                 <Button variant={props.filter === "active" ? "contained" : "outlined"}
-                        color={"primary"} name="active" onClick={onClickChangeFilter }
-                        //color={"primary"} name="active" onClick={onActiveClickHandler}
+                        //color={"primary"} name="active" onClick={onClickChangeFilter }
+                        color={"primary"} name="active" onClick={onActiveClickHandler}
                 >Active
                 </Button>
                 <Button variant={props.filter === "completed" ? "contained" : "outlined"}
-                        color={"secondary"} name="completed" onClick={onClickChangeFilter }
-                        //color={"secondary"} name="completed" onClick={onCompletedClickHandler}
+                        //color={"secondary"} name="completed" onClick={onClickChangeFilter }
+                        color={"secondary"} name="completed" onClick={onCompletedClickHandler}
                 >Completed
                 </Button>
             </div>
