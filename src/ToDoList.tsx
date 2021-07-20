@@ -1,4 +1,4 @@
-import React, {useState, KeyboardEvent, ChangeEvent, MouseEvent} from "react";
+import React, { ChangeEvent, MouseEvent, useCallback} from "react";
 import {FilterValuesType, TaskType} from "./App";
 import AddItemForm from "./AddItemForm";
 import EditableSpan from "./EditableSpan";
@@ -19,19 +19,22 @@ export type ToDoListPropsType = {
     changeToDoListTitle: (title: string, toDoListID: string) => void
 }
 
-function ToDoList(props: ToDoListPropsType) {
-
-    const addTask = (title: string) => props.addTask(title, props.toDoListID)
+const ToDoList = React.memo((props: ToDoListPropsType) => {
+    console.log('ToDoList is called')
+    const addTask = useCallback((title: string) => props.addTask(title, props.toDoListID), [])//закешировали ф-ию:не перевызывать,ф-ия не от чего не зависит
 
     const filter = props.filter
 
     const tasksJSXElement = props.tasks.map(t => {
+        debugger;
         const taskClasses: string = t.isDone ? "is-done" : "";
+
         const removeTask = () => {
             props.removeTask(t.id, props.toDoListID)
         }
         const changeTaskStatus = (e: ChangeEvent<HTMLInputElement>) =>
             props.changeTaskStatus(t.id, e.currentTarget.checked, props.toDoListID)
+
         const changeTaskTitle = (title: string) => {
             props.changeTaskTitle(t.id, title, props.toDoListID)
         }
@@ -83,6 +86,6 @@ function ToDoList(props: ToDoListPropsType) {
         </div>
 
     )
-}
+})
 
 export default ToDoList;

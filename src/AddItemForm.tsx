@@ -1,5 +1,5 @@
 import React, {useState, KeyboardEvent, ChangeEvent, MouseEvent} from "react";
-import {Button, IconButton, TextField} from "@material-ui/core";
+import {IconButton, TextField} from "@material-ui/core";
 import {AddCircleOutlineTwoTone} from "@material-ui/icons";
 
 type AddItemFormPropsType = {
@@ -7,20 +7,24 @@ type AddItemFormPropsType = {
 }
 
 //создаём универсальную компоненту для добавления...
-function AddItemForm(props: AddItemFormPropsType) {
+export const AddItemForm = React.memo( (props: AddItemFormPropsType) => { //React.memo-для контроля перерисовки только с новыми props
+    console.log('push, push the button2')
     const [title, setTitle] = useState<string>("")
     const [error, setError] = useState<boolean>(false)
 
-    const onChangeTitle = (e: ChangeEvent<HTMLInputElement>) => {
+    const onChangeTitle = (e: ChangeEvent<HTMLInputElement>) => {// onChangeHandler
+
         setTitle(e.currentTarget.value)
         setError(false)
+        console.log('push, push the button')
     }
 
-    const onClickAddItem = () => {
+    const onClickAddItem = () => { //onKeyPressHandler
         const trimmedTitle = title.trim()
         if (trimmedTitle) {
             props.addItem(trimmedTitle)
         } else {
+            console.log('push, push the button3')
             setError(true)
         }
         setTitle("")
@@ -54,6 +58,6 @@ function AddItemForm(props: AddItemFormPropsType) {
             </IconButton>
         </div>
     )
-}
+});
 
 export default AddItemForm;
