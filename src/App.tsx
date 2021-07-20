@@ -1,8 +1,9 @@
+/*
 import React, {useState} from 'react';
 import './App.css';
 import ToDoList from "./ToDoList";
 import {v1} from "uuid";
-import AddItemForm from "./AddItemForm";
+import {AddItemForm} from "./AddItemForm";
 import {AppBar, IconButton, Typography, Toolbar, Button, Container, Grid, Paper} from "@material-ui/core";
 import {Menu} from '@material-ui/icons';
 
@@ -13,6 +14,7 @@ export type TaskType = {
     id: string
 
 }
+//export type FilterValuesType = "active" | "completed" | "all"
 export type FilterValuesType = string
 export type ToDoListType = {
     id: string
@@ -180,3 +182,7 @@ function App() {
 }
 
 export default App;
+*/
+
+
+export let ssdd={}

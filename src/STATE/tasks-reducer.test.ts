@@ -4,8 +4,8 @@ import {
     removeTaskActionCreator,
     tasksReducer
 } from './tasks-reducer';
-import {TasksStateType} from '../App';
 import {AddToDoListActionCreator} from "./ToDoList-reducers";
+import {TasksStateType} from "../AppWithRedux";
 
 
 beforeEach(() => {

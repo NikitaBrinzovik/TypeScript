@@ -1,8 +1,9 @@
+/*
 import React, {useReducer, useState} from 'react';
 import './App.css';
 import ToDoList from "./ToDoList";
 import {v1} from "uuid";
-import AddItemForm from "./AddItemForm";
+import {AddItemForm} from "./AddItemForm";
 import {AppBar, IconButton, Typography, Toolbar, Button, Container, Grid, Paper} from "@material-ui/core";
 import {Menu} from '@material-ui/icons';
 import {
@@ -26,7 +27,7 @@ export type TaskType = {
     id: string
 
 }
-export type FilterValuesType = string
+export type FilterValuesType = "active" | "completed" | "all"
 export type ToDoListType = {
     id: string
     title: string
@@ -178,3 +179,6 @@ function AppWithReducers() {
 }
 
 export default AppWithReducers;
+*/
+
+export let x ={};

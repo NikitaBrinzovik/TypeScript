@@ -1,5 +1,6 @@
-import {FilterValuesType, ToDoListType} from "../App";
+
 import {v1} from "uuid";
+import {FilterValuesType, ToDoListType} from "../AppWithRedux";
 
 export type RemoveToDoListActionType = {
     type: "REMOVE-TODOLIST"

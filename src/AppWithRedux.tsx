@@ -1,7 +1,7 @@
 import React, {useCallback} from 'react';
 import './App.css';
 import ToDoList from "./ToDoList";
-import AddItemForm from "./AddItemForm";
+import {AddItemForm} from "./AddItemForm";
 import {AppBar, IconButton, Typography, Toolbar, Button, Container, Grid, Paper} from "@material-ui/core";
 import {Menu} from '@material-ui/icons';
 import {
@@ -18,13 +18,13 @@ import {
 import {useDispatch, useSelector} from "react-redux";
 import {AppRootStateType} from "./STATE/STORE";
 
-
 export type TaskType = {
     title: string
     isDone: boolean
     id: string
 
 }
+//export type FilterValuesType = "active" | "completed" | "all"
 export type FilterValuesType = string
 export type ToDoListType = {
     id: string
@@ -38,64 +38,58 @@ export type TasksStateType = {
 
 
 export const AppWithRedux = () => {
-
+    console.log("App is called")
     const dispatch = useDispatch()
     const toDoList = useSelector<AppRootStateType, Array<ToDoListType>>(state => state.toDoLists)
     const tasks = useSelector<AppRootStateType, TasksStateType>(state => state.tasks)
 
-
     const removeTasks = useCallback((taskID: string, toDoListID: string) => {
         const action = removeTaskActionCreator(taskID, toDoListID);
         dispatch(action)
-    }, []);
+    }, [dispatch])
 
-    const addTask =useCallback((title: string, toDoListID: string) => {
+    const addTask = useCallback((title: string, toDoListID: string) => {
+
         const action = addTaskActionCreator(title, toDoListID);
         dispatch(action);
 
-    }, [])
+    }, [dispatch])
 
     const changeTaskStatus = useCallback((taskID: string, newIsDoneValue: boolean, toDoListID: string) => {
         const action = changeTaskStatusActionCreator(taskID, newIsDoneValue, toDoListID)
         dispatch(action);
-    }, []);
+    }, [dispatch])
 
     const changeTaskTitle = useCallback((taskID: string, newTitle: string, toDoListID: string) => {
         //короткая запись:
         dispatch(changeTaskTitleActionCreator(taskID, newTitle, toDoListID));
-    }, []);
+    }, [dispatch])
 
     //functions for to do list:
     const changeFilter = useCallback((value: FilterValuesType, toDoListID: string) => { //FilterValueType
+
         const action = ChangeFilterToDoListActionCreator(toDoListID, value)
         dispatch(action);
-    }, []);
-
-    const changeToDoListTitle = useCallback((title: string, toDoListID: string) => {
-        const action = ChangeTitleActionCreator(title, toDoListID)
-        dispatch(action);
-    }, [])
+    }, [dispatch])
 
     const removeToDoLIst = useCallback((toDoListID: string) => {
         const action = RemoveToDoListActionCreator(toDoListID)
         dispatch(action)
-    }, []);
+    }, [dispatch])
 
-    // const addToDoList = useCallback((title: string) => {
-    //     debugger;//useCallback -закешировали ф-ию, чтоб не перевызывать её
-    //     const action = AddToDoListActionCreator(title)
-    //     dispatch(action)
-    // }, []);
+    const changeToDoListTitle = useCallback((title: string, toDoListID: string) => {
+        const action = ChangeTitleActionCreator(title, toDoListID)
+        dispatch(action);
+    }, [dispatch])
 
-    const addToDoList =(title: string) => {
-        debugger;//useCallback -закешировали ф-ию, чтоб не перевызывать её
+    const addToDoList = useCallback((title: string) => {//useCallback -закешировали ф-ию, чтоб не перевызывать её
         const action = AddToDoListActionCreator(title)
         dispatch(action)
-    }//пустой массив говорит о том, что ф-ия не от чего не зависит
+    }, [dispatch])//пустой массив говорит о том, что ф-ия не от чего не зависит
 
 //UI:
 
-    const getTaskForToDoList = useCallback((ToDoList: ToDoListType) => {
+    const getTaskForToDoList = (ToDoList: ToDoListType) => {
         //let taskFoToDoList = tasks
         switch (ToDoList.filter) {
             case "active":
@@ -109,9 +103,12 @@ export const AppWithRedux = () => {
                 break;
         }
         return tasks[ToDoList.id]
-    }, []);
+    }
 
     const toDoListComponents = toDoList.map(tl => {
+            //У Димы так:
+            //let tasksForTodolist = tasks[tl.id];
+
             return (
                 <Grid item key={tl.id}>
                     <Paper elevation={5} style={{padding: "20px"}}>
@@ -155,7 +152,9 @@ export const AppWithRedux = () => {
                     <AddItemForm addItem={addToDoList}/>
                 </Grid>
                 <Grid container spacing={3}>
+
                     {toDoListComponents}
+
                 </Grid>
 
             </Container>
