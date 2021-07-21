@@ -64,8 +64,10 @@ const ToDoList = React.memo((props: ToDoListPropsType) => {//закеширов�
         return props.tasks
     }
     // и в Button надо поменять онКлик и tasksJSXElement
-    */
+
     //const tasksJSXElement = props.tasks.map(t =>
+    */
+
     const tasksJSXElement = tasksForTodolist.map(t =>
         <Task
             toDoListID={props.toDoListID}
@@ -77,21 +79,6 @@ const ToDoList = React.memo((props: ToDoListPropsType) => {//закеширов�
             />
     )
 
-   /* const getTaskForToDoList = (ToDoList: ToDoListType) => {
-        //let taskFoToDoList = tasks
-        switch (ToDoList.filter) {
-            case "active":
-                console.log('filter1')
-                //taskFoToDoList =
-                return props.tasks.filter(t => !t.isDone)
-                break;
-            case "completed":
-                console.log('filter2')
-                return props.tasks.filter(t => t.isDone)
-                break;
-        }
-        return props.tasks
-    }*/
     return (
         <div>
             <h3>
@@ -106,18 +93,15 @@ const ToDoList = React.memo((props: ToDoListPropsType) => {//закеширов�
             </ul>
             <div>
                 <Button variant={props.filter === "all" ? "contained" : "outlined"}
-                        //name="all" onClick={onClickChangeFilter }
-                        name="all" onClick={onAllClickHandler}
+                        name="all" onClick={onAllClickHandler} //name="all" onClick={onClickChangeFilter }
                 >All
                 </Button>
                 <Button variant={props.filter === "active" ? "contained" : "outlined"}
-                        //color={"primary"} name="active" onClick={onClickChangeFilter }
-                        color={"primary"} name="active" onClick={onActiveClickHandler}
+                        color={"primary"} name="active" onClick={onActiveClickHandler} //color={"primary"} name="active" onClick={onClickChangeFilter }
                 >Active
                 </Button>
                 <Button variant={props.filter === "completed" ? "contained" : "outlined"}
-                        //color={"secondary"} name="completed" onClick={onClickChangeFilter }
-                        color={"secondary"} name="completed" onClick={onCompletedClickHandler}
+                        color={"secondary"} name="completed" onClick={onCompletedClickHandler} //color={"secondary"} name="completed" onClick={onClickChangeFilter }
                 >Completed
                 </Button>
             </div>

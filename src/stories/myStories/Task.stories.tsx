@@ -1,4 +1,5 @@
 import React from "react";
+// @ts-ignore
 import {action} from  "@storybook/addon-actions";
 import {Task} from "../../Task";
 

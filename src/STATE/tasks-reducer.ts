@@ -36,8 +36,8 @@ export type ActionTypes =
     | AddToDoLIstActionType
     | RemoveToDoListActionType;
 
-
-const initialState: TasksStateType = {
+//Заготовка с готовыми двумя листами. Смотри в ToDoList-reducers: initialState, чтоб тоже разкомментировать
+/*export const initialState: TasksStateType = {
     [toDoListID_1]: [
         {id: v1(), isDone: true, title: "HTML"},
         {id: v1(), isDone: true, title: "CSS"},
@@ -50,8 +50,8 @@ const initialState: TasksStateType = {
         {id: v1(), isDone: true, title: "bread"},
         {id: v1(), isDone: false, title: "weed"},
     ],
-}
-
+}*/
+export const initialState: TasksStateType = {toDoListID_1:[{id: v1(), isDone: true, title: "HTML"}]}
 export const tasksReducer = (state: TasksStateType = initialState, action: ActionTypes): TasksStateType => {
 
     switch (action.type) {

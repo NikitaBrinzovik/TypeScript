@@ -3,7 +3,7 @@ import {toDoListReducer} from "./ToDoList-reducers";
 import {tasksReducer} from "./tasks-reducer";
 //import {TasksStateType, ToDoListType} from "../AppWithRedux";
 
-const rootReducer = combineReducers({//Создали общий редюсер, состоящий из мелких редюсеров
+export const rootReducer = combineReducers({//Создали общий редюсер, состоящий из мелких редюсеров
     toDoLists: toDoListReducer,
     tasks: tasksReducer,
 })

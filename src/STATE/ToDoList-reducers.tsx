@@ -49,8 +49,9 @@ export const ChangeFilterToDoListActionCreator = (toDoListID: string, value: Fil
 export const toDoListID_1 = v1()
 export const toDoListID_2 = v1()
 const initialState: Array<ToDoListType> = [
-    {id: toDoListID_1, title: "what to learn", filter: "all"},
-    {id: toDoListID_2, title: "what to buy", filter: "all"},
+//Заготовка с готовыми двумя листами. Смотри в tasks-reducers: initialState, чтоб тоже разкомментировать
+    /*{id: toDoListID_1, title: "what to learn", filter: "all"},
+    {id: toDoListID_2, title: "what to buy", filter: "all"},*/
 ]
 export const toDoListReducer = (state: Array<ToDoListType> = initialState, action: ActionTypes): Array<ToDoListType> => {
 
