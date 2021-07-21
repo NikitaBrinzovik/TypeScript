@@ -1,0 +1,19 @@
+import React from "react";
+import {action} from "@storybook/addon-actions";
+
+import EditableSpan from "../../EditableSpan";
+
+export default {
+    title: "EditableSpan Component",
+    component: EditableSpan
+}
+/*const removeTaskCallback = action("This task removed")
+const changeTaskStatusCallback = action("Status changed")
+const changeTaskTitleCallback = action("Title changed")*/
+const changeTitleCallback = action("title changed")
+
+export const EditableSpanBaseExample = () => {
+    return <>
+        <EditableSpan title={"here will be title (double click on me)"} changeTitle={changeTitleCallback} />
+    </>
+}
