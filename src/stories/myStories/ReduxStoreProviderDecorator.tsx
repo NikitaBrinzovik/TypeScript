@@ -1,11 +1,9 @@
 import React from 'react'
 import {Provider} from "react-redux";
-import {AppRootStateType, store} from "../../STATE/STORE";
-
-
+import {AppRootStateType} from "../../STATE/STORE";
 import {combineReducers, createStore} from 'redux'
 import {v1} from 'uuid'
-import {initialState, tasksReducer} from "../../STATE/tasks-reducer";
+import {tasksReducer} from "../../STATE/tasks-reducer";
 import {toDoListReducer} from "../../STATE/ToDoList-reducers";
 
 const rootReducer = combineReducers({
@@ -15,22 +13,24 @@ const rootReducer = combineReducers({
 
 const initialGlobalState = {
     toDoLists: [
-        {id: "toDoListID1", title: "What to learn", filter: "all"},
-        {id: "toDoListID2", title: "What to buy", filter: "all"}
-    ] ,
+        {id: "toDoListID_1", title: "What to learn", filter: "all"},
+        {id: "toDoListID_2", title: "What to buy", filter: "all"}
+    ],
     tasks: {
-        ["toDoListID1"]: [
-            {id: v1(), title: "HTML&CSS", isDone: true},
-            {id: v1(), title: "JS", isDone: true},
-            {id: v1(), title: "TS", isDone: false},
+        ["toDoListID_1"]: [
+            {id: v1(), isDone: true, title: "HTML"},
+            {id: v1(), isDone: true, title: "CSS"},
+            {id: v1(), isDone: true, title: "React"},
+            {id: v1(), isDone: false, title: "TS"},
         ],
-        ["toDoListID2"]: [
-            {id: v1(), title: "Milk", isDone: true},
-            {id: v1(), title: "React Book", isDone: true},
+        ["toDoListID_2"]: [
+            {id: v1(), isDone: true, title: "milk"},
+            {id: v1(), isDone: true, title: "meat"},
+            {id: v1(), isDone: true, title: "bread"},
+            {id: v1(), isDone: false, title: "weed"},
         ]
     }
 };
-
 
 export const storyBookStore = createStore(rootReducer, initialGlobalState as AppRootStateType);
 
