@@ -12,19 +12,11 @@ export const GetTodolistsExample = () => {
         todolistAPI.getTodos()// response- это ответ от axios. data- это ответ от разработчика бека
             .then((res) => {setState((res.data[0].id))})
 
-        /*
-         let promise = axios.get(baseURL, {
-             withCredentials: true
-         })
-         promise.then((response) => {// response- это ответ от axios
-             setState(response.data);// data- это ответ от разработчика бека
-         })*/
     }, [])
 
     // который в виде строки будем отображать в div-ке
     return <div> {JSON.stringify(state)}</div>
 }
-
 
 export const CreateTodolistExample = () => {
     const [state, setState] = useState<any>(null)
@@ -35,21 +27,11 @@ export const CreateTodolistExample = () => {
         todolistAPI.createTodo(title)
             .then((res) => {setState(res.data)})
 
-        /*let promise = axios.post(baseURL,
-            {title: "AXIOS"},
-            {
-                withCredentials: true,
-                headers: {"api-key": "3f338418-f98d-49bd-8d21-8909cba70bac"}
-            })
-        promise.then((response) => {
-            setState(response.data)
-        })
-            .catch((err) => {
-            })*/
     }, [])
 
     return <div> {JSON.stringify(state)}</div>
 }
+
 export const DeleteTodlistExample = () => {
     const [state, setState] = useState<any>(null)
 
@@ -58,16 +40,6 @@ export const DeleteTodlistExample = () => {
 
         todolistAPI.deleteTodo(id)
             .then((res) => {setState(res.data)})
-
-        /*let promise = axios.delete(
-            `https://social-network.samuraijs.com/api/1.1/todo-lists/${"6c9e3a27-0c2a-4820-ae30-6bea2a31929e"}`,
-            {
-                withCredentials: true,
-                headers: {"api-key": "3f338418-f98d-49bd-8d21-8909cba70bac"}
-            })
-        promise.then((res) => {
-            //setState(res.data);
-        })*/
 
     }, [])
 
@@ -82,17 +54,6 @@ export const UpdateTodolistTitle = () => {
 
         todolistAPI.updateTodo(id, title)
             .then((res) => {setState((res.data))})
-
-        /*let promise = axios.put(
-            `https://social-network.samuraijs.com/api/1.1/todo-lists/${"803e05c5-af91-4a6c-a3c4-e4cc41b44488"}`,
-            {title: 'REACT'},
-            {
-                withCredentials: true,
-                headers: {"api-key": "3f338418-f98d-49bd-8d21-8909cba70bac"}
-            })
-        promise.then((res) => {
-            setState(res.data)
-        })*/
 
     }, [])
 
