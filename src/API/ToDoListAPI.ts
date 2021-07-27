@@ -20,24 +20,6 @@ type ResponseType<D = {}> = {//если не передавать, то буде
     fieldsErrors?: Array<string>
 }
 
-export const todolistAPI = {
-    getTodos() {
-        return instance.get<Array<TodoListType>>('/todo-lists')
-    },
-
-    createTodo(title: string) {
-        return instance.post<Array<ResponseType<{ item: TodoListType }>>>('/todo-lists', title)
-    },
-
-    deleteTodo(id: string) {
-        return instance.delete<Array<ResponseType>>(`todo-lists/${id}`)//<Array<ResponseType<{}>>>
-    },
-
-    updateTodo(id: string, title: string) {
-        return instance.put<Array<ResponseType>>(`todo-lists/${id}`, {title}) //<Array<ResponseType<{}>>>
-    },
-}
-
 export type TaskEntityType ={
     description: string
     title: string
@@ -60,26 +42,44 @@ type UpdateTaskModelType = {
     startDate: string //datetime
     deadline: string //datetime
 }
-type GetTaskResponseType<T> = {
+type GetTaskResponseType = {
     error: string | null
     totalCount: number
-    items: TaskEntityType
+    items: Array<TaskEntityType>
 
 }
-export const taskAPI = {
-    getTasks(todolistId:string) {
-        return instance.get<GetTaskResponseType<TaskEntityType>>(`/todo-lists/${todolistId}/tasks`)
+export const todolistAPI = {
+    getTodos() {
+        return instance.get<Array<TodoListType>>('/todo-lists')
     },
 
-    /*createTask(todolistId: string, title:string) {
-        return instance.post<Array<TaskResponseType<{}>>>(`/todo-lists/${todolistId}/tasks`, title)
-    },*/
+    createTodo(title: string) {
+        return instance.post<Array<ResponseType<{ item: TodoListType }>>>('/todo-lists', title)
+    },
+
+    deleteTodo(id: string) {
+        return instance.delete<Array<ResponseType>>(`todo-lists/${id}`)//<Array<ResponseType<{}>>>
+    },
+
+    updateTodo(id: string, title: string) {
+        return instance.put<Array<ResponseType>>(`todo-lists/${id}`, {title}) //<Array<ResponseType<{}>>>
+    },
+}
+
+export const taskAPI = {
+    getTasks(todolistId:any) {
+        return instance.get<GetTaskResponseType>(`/todo-lists/${todolistId}/tasks`)
+    },
+
+    createTask(todolistId: string, title:string) {
+        return instance.post<ResponseType<TaskEntityType>>(`/todo-lists/${todolistId}/tasks`, title)
+    },
 
     deleteTask(todolistId:string, taskId:string) {
         return instance.delete<ResponseType>(`/todo-lists/${todolistId}/tasks/${taskId}`)//ResponseType<{}>
     },
 
-    /*updateTask(todolistId: string, taskId:string, model:UpdateTaskModelType) {
-        return instance.put<Array<TaskResponseType<{}>>>(`/todo-lists/${todolistId}/tasks/${taskId}`, {title})
-    },*/
+    updateTask(todolistId: string, taskId:string, model:UpdateTaskModelType) {
+        return instance.put<ResponseType>(`/todo-lists/${todolistId}/tasks/${taskId}`, model)//model уже объект, пишем без {}
+    },
 }
