@@ -67,7 +67,7 @@ export const todolistAPI = {
 }
 
 export const taskAPI = {
-    getTasks(todolistId:any) {
+    getTasks(todolistId:any) {// почему не хочет стринги?
         return instance.get<GetTaskResponseType>(`/todo-lists/${todolistId}/tasks`)
     },
 
